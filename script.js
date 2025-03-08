@@ -1,86 +1,99 @@
-const presaleContractAddress = "0x3Bd2D68541F359BdFDd5F172A6d4BA60096e8814"; // Wallet de preventa
-const tokenContractAddress = "0xA1412331439BD6Ac4Fd8228556E865C597ED9B54"; // Contrato del token LMB
+// Esperamos a que el DOM esté completamente cargado antes de ejecutar cualquier código
+document.addEventListener('DOMContentLoaded', function () {
 
-const presaleAbi = [
-    {
-        "constant": false,
-        "inputs": [
-            { "name": "amount", "type": "uint256" }
-        ],
-        "name": "buyTokens",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-];
-
-const tokenAbi = [
-    {
-        "constant": false,
-        "inputs": [
-            { "name": "spender", "type": "address" },
-            { "name": "amount", "type": "uint256" }
-        ],
-        "name": "approve",
-        "outputs": [{ "name": "", "type": "bool" }],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-];
-
-let web3;
-let presaleContract;
-let tokenContract;
-let userAccount;
-
-async function connectWallet() {
+    // Detectamos si hay una wallet disponible
     if (window.ethereum) {
-        web3 = new Web3(window.ethereum);
-        try {
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            userAccount = accounts[0];
-            presaleContract = new web3.eth.Contract(presaleAbi, presaleContractAddress);
-            tokenContract = new web3.eth.Contract(tokenAbi, tokenContractAddress);
-            alert("Wallet conectada: " + userAccount);
-        } catch (error) {
-            console.error("Error al conectar la wallet:", error);
-        }
+        ethereum.request({ method: 'eth_requestAccounts' })
+            .then(accounts => {
+                // Asignamos la cuenta conectada
+                const userAddress = accounts[0];
+                console.log("Cuenta conectada: ", userAddress);
+            })
+            .catch(error => {
+                alert("Error al conectar la wallet: " + error.message);
+            });
     } else {
-        alert("Por favor, instala MetaMask para comprar tokens.");
-    }
-}
-
-async function buyTokens() {
-    if (!presaleContract || !tokenContract) {
-        alert("Conecta tu wallet primero.");
-        return;
+        alert("No se encontró ninguna wallet. Por favor, instala MetaMask u otra extensión.");
     }
 
-    const amountUSDT = prompt("Ingresa la cantidad de USDT a invertir (mínimo 10, máximo 200):");
-    if (amountUSDT < 10 || amountUSDT > 200) {
-        alert("La compra debe ser entre 10 y 200 USDT.");
-        return;
+    // Función para manejar la compra de tokens
+    document.getElementById('buyButton').addEventListener('click', function () {
+        const amount = document.getElementById('amountInput').value; // Captura el valor de compra
+        if (amount && parseFloat(amount) >= 10) {
+            buyTokens(amount);  // Llamamos a la función para realizar la compra
+        } else {
+            alert("El monto mínimo de compra es 10 USDT.");
+        }
+    });
+
+    // Función para realizar la compra
+    function buyTokens(amount) {
+        const contractAddress = "0xYourContractAddress"; // Dirección del contrato
+        const abi = [/* tu ABI aquí */]; // ABI del contrato
+
+        const web3 = new Web3(window.ethereum);
+        const contract = new web3.eth.Contract(abi, contractAddress);
+
+        // Verificamos que el usuario esté conectado a la wallet
+        if (typeof window.ethereum !== 'undefined') {
+            ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+                const userAddress = accounts[0];
+
+                // Llamada a la función de compra en el contrato
+                contract.methods.buyTokens().send({
+                    from: userAddress,
+                    value: web3.utils.toWei(amount, 'ether') // Convertimos USDT a la cantidad correspondiente en Ether
+                })
+                .then(result => {
+                    console.log("Compra exitosa: ", result);
+                    alert("Compra exitosa!");
+                })
+                .catch(error => {
+                    console.log("Error en la compra: ", error);
+                    alert("Hubo un error en la compra.");
+                });
+            });
+        } else {
+            alert("Por favor, conecta tu wallet.");
+        }
     }
 
-    try {
-        const usdtAmount = web3.utils.toWei(amountUSDT, "ether");
+    // Función para cambiar de idioma (simplificada para el ejemplo)
+    document.getElementById('changeLanguage').addEventListener('change', function () {
+        const selectedLanguage = this.value;
+        if (selectedLanguage === 'es') {
+            // Cambia a español
+            document.getElementById('title').innerText = "Bienvenido a la preventa de LORD M";
+            // Agrega más cambios de texto según sea necesario
+        } else if (selectedLanguage === 'en') {
+            // Cambia a inglés
+            document.getElementById('title').innerText = "Welcome to the LORD M presale";
+            // Agrega más cambios de texto según sea necesario
+        }
+    });
 
-        // Aprobar USDT para la preventa
-        await tokenContract.methods.approve(presaleContractAddress, usdtAmount).send({ from: userAccount });
+    // Función para compartir en redes sociales (simplificada)
+    document.getElementById('shareButton').addEventListener('click', function () {
+        const url = window.location.href;
+        const text = "Únete a la preventa del token LORD M (LMB)!";
+        const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+        window.open(shareUrl, '_blank');
+    });
 
-        // Comprar tokens en la preventa
-        await presaleContract.methods.buyTokens(usdtAmount).send({ from: userAccount });
-        alert("¡Compra realizada con éxito! Revisa tu wallet.");
-    } catch (error) {
-        console.error("Error en la compra:", error);
-        alert("Error al procesar la compra.");
-    }
-}
+    // Función para controlar el temporizador de la preventa (simplificado)
+    let countdownTimer = setInterval(function () {
+        const endDate = new Date('2025-04-08T00:00:00'); // Fecha de finalización de la preventa
+        const currentDate = new Date();
+        const timeRemaining = endDate - currentDate;
 
-// Vincular botón de compra con la función
-document.getElementById("buyButton").addEventListener("click", async function () {
-    await connectWallet();
-    await buyTokens();
+        if (timeRemaining <= 0) {
+            clearInterval(countdownTimer);
+            document.getElementById('countdown').innerText = "La preventa ha terminado";
+        } else {
+            const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+            document.getElementById('countdown').innerText = `${hours}h ${minutes}m ${seconds}s`;
+        }
+    }, 1000);
 });
