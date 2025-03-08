@@ -3,59 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LORD M (LMB) - Preventa</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Preventa LORD M (LMB)</title>
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2a2a2a;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #FFD700;
+            margin-top: 20px;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+            input, button, select {
+                width: 90%;
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+
+        /* Container Styles */
+        div {
+            margin: 20px 0;
+        }
+
+        /* Form Elements */
+        input, select, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            border-radius: 8px;
+            border: 1px solid #FFD700;
+            background-color: #333;
+            color: white;
+        }
+        
+        input[type="number"], input[type="text"] {
+            width: 80%;
+        }
+
+        /* Button Styles */
+        #buyButton {
+            background-color: #FFD700;
+            border: none;
+            cursor: pointer;
+            color: black;
+        }
+
+        /* Status Message */
+        #statusMessage {
+            margin-top: 20px;
+            color: green;
+            font-size: 18px;
+        }
+
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="logo.png" alt="Logo LORD M">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#preventa">Preventa</a></li>
-                <li><a href="#estadisticas">Estadísticas</a></li>
-                <li><a href="#youtubers">Youtubers</a></li>
-                <li><a href="#referidos">Referidos</a></li>
-            </ul>
-        </nav>
-    </header>
+    <h1>Preventa de LORD M (LMB)</h1>
 
-    <section id="preventa" class="section">
-        <h2>Preventa de LORD M (LMB)</h2>
-        <div class="countdown">
-            <p>Tiempo restante: <span id="countdown"></span></p>
-        </div>
-        <p>Compra tokens LMB antes de que se agoten. ¡Recibe tu token automáticamente en tu wallet!</p>
-        <button id="buyButton">Comprar Ahora</button>
-        <div class="progress-bar">
-            <p>Tokens vendidos: <span id="tokens-sold">0</span> / 750M LMB</p>
-        </div>
-    </section>
+    <div>
+        <label for="amountInput">Cantidad de USDT:</label>
+        <input type="number" id="amountInput" placeholder="Cantidad en USDT" />
+    </div>
+    
+    <div>
+        <label for="referrerInput">Dirección de referido:</label>
+        <input type="text" id="referrerInput" placeholder="Dirección de referido (opcional)" />
+    </div>
 
-    <section id="estadisticas" class="section">
-        <h2>Estadísticas de la Preventa</h2>
-        <div class="stats">
-            <p>Tokens vendidos: <span id="total-sold">0</span></p>
-            <p>Meta de recaudación: <span id="recaudacion-meta">150M USDT</span></p>
-        </div>
-    </section>
+    <div>
+        <label for="networkSelect">Selecciona la Red:</label>
+        <select id="networkSelect">
+            <option value="ethereum">Ethereum</option>
+            <option value="binance">Binance Smart Chain</option>
+        </select>
+    </div>
 
-    <section id="youtubers" class="section">
-        <h2>Youtubers Promocionando LORD M (LMB)</h2>
-        <p>Si eres Youtuber y quieres ser parte de nuestra campaña, contacta con nosotros para obtener tus beneficios y pagos.</p>
-    </section>
+    <div>
+        <label for="walletSelect">Selecciona la Wallet:</label>
+        <select id="walletSelect">
+            <option value="metamask">MetaMask</option>
+            <option value="trustwallet">Trust Wallet</option>
+        </select>
+    </div>
 
-    <section id="referidos" class="section">
-        <h2>Recompensas por Referidos</h2>
-        <p>Invita a tus amigos y gana tokens LMB. Por cada referido que compre al menos 10 USDT, recibirás recompensas en LMB.</p>
-    </section>
+    <button id="buyButton">Comprar Tokens</button>
 
-    <footer>
-        <p>&copy; 2025 LORD M (LMB) - Todos los derechos reservados</p>
-    </footer>
+    <div id="statusMessage"></div>
 
-    <script src="script.js"></script>
+    <script>
+        // ABI del contrato (proporcionado por el usuario)
+        const abi = [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "getTokensSold",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "amount",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "referrer",
+                        "type": "address"
+                    }
+                ],
+                "name": "buyTokens",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "amount",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "referrer",
+                        "type": "address"
+                    }
+                ],
+                "name": "buyTokensWithUSDT",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
+
+        // Dirección del contrato del token (proporcionado por el usuario)
+        const contractAddress = '0x3Bd2D68541F359BdFDd5F172A6d4BA60096e8814'; // Dirección de la preventa
+
+        let web3;
+        let currentAccount;
+
+        // Función para conectar a la red seleccionada
+        async function connectToNetwork() {
+            const selectedNetwork = document.getElementById('networkSelect').value;
+
+            if (selectedNetwork === "ethereum") {
+                web3 = new Web3(window.ethereum);
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                currentAccount = (await web3.eth.getAccounts())[0];
+                console.log('Conectado a Ethereum');
+            } else if (selectedNetwork === "binance") {
+                web3 = new Web3(window.ethereum);  // Binance Smart Chain usa Web3 similar
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                currentAccount = (await web3.eth.getAccounts())[0];
+                console.log('Conectado a Binance Smart Chain');
+            } else {
+                alert('Red no soportada.');
+            }
+        }
+
+        // Función para comprar tokens
+        async function buyTokens(amount, referrer) {
+            document.getElementById('statusMessage').innerText = 'Procesando...';
+
+            try {
+                const contract = new web3.eth.Contract(abi, contractAddress);
+
+                // Si el pago es en USDT, interactuar con el contrato de USDT
+                if (selectedNetwork === 'binance') {
+                    // Si estamos en BSC y el pago es con USDT, configuramos el contrato de USDT en BSC.
+                    const usdtContractAddress = '0x55d398326f99059fF775485246999027B3197955'; // Dirección de USDT en BSC
+                    const usdtContract = new web3.eth.Contract(erc20ABI, usdtContractAddress);
+                    
+                    // Asegurarse de que el usuario apruebe la cantidad de USDT antes de enviar
+                    await usdtContract.methods.approve(contractAddress, web3.utils.toWei(amount, 'mwei')).send({ from: currentAccount });
+
+                    // Llamada al contrato para comprar tokens con USDT
+                    await contract.methods.buyTokensWithUSDT(amount, referrer || '0x0000000000000000000000000000000000000000').send({
+                        from: currentAccount
+                    });
+                } else {
+                    // Si no es BSC, se asume pago en Ether (ETH)
+                    await contract.methods.buyTokens(amount, referrer || '0x0000000000000000000000000000000000000000').send({
+                        from: currentAccount,
+                        value: web3.utils.toWei(amount, 'ether')
+                    });
+                }
+
+                document.getElementById('statusMessage').innerText = 'Compra exitosa!';
+            } catch (error) {
+                document.getElementById('statusMessage').innerText = 'Error en la compra.';
+                console.error('Error en la compra:', error);
+            }
+        }
+
+        // Llamada a la función de compra cuando el usuario hace clic
+        document.getElementById('buyButton').onclick = async function () {
+            const amount = document.getElementById('amountInput').value;
+            const referrer = document.getElementById('referrerInput').value;
+
+            if (amount >= 10) {
+                // Conectar a la red seleccionada
+                await connectToNetwork();
+
+                // Comprar tokens
+                buyTokens(amount, referrer);
+            } else {
+                alert('La cantidad mínima es 10 USDT.');
+            }
+        };
+    </script>
+
 </body>
 </html>
