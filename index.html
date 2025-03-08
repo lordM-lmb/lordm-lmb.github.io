@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LORD M (LMB) - Preventa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo LORD M">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#preventa">Preventa</a></li>
+                <li><a href="#estadisticas">Estadísticas</a></li>
+                <li><a href="#youtubers">Youtubers</a></li>
+                <li><a href="#referidos">Referidos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="preventa" class="section">
+        <h2>Preventa de LORD M (LMB)</h2>
+        <div class="countdown">
+            <p>Tiempo restante: <span id="countdown"></span></p>
+        </div>
+        <p>Compra tokens LMB antes de que se agoten. ¡Recibe tu token automáticamente en tu wallet!</p>
+        <button id="buyButton" onclick="startBattle()">Comprar Ahora</button>
+        <div class="progress-bar">
+            <p>Tokens vendidos: <span id="tokens-sold">0</span> / 750M LMB</p>
+        </div>
+    </section>
+
+    <section id="estadisticas" class="section">
+        <h2>Estadísticas de la Preventa</h2>
+        <div class="stats">
+            <p>Tokens vendidos: <span id="total-sold">0</span></p>
+            <p>Meta de recaudación: <span id="recaudacion-meta">150M USDT</span></p>
+        </div>
+    </section>
+
+    <section id="youtubers" class="section">
+        <h2>Youtubers Promocionando LORD M (LMB)</h2>
+        <p>Si eres Youtuber y quieres ser parte de nuestra campaña, contacta con nosotros para obtener tus beneficios y pagos.</p>
+        <form id="youtuber-form">
+            <label for="name">Nombre de Canal:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="channel-url">URL del Canal de YouTube:</label>
+            <input type="url" id="channel-url" name="channel-url" required>
+            <button type="submit">Unirme al Programa</button>
+        </form>
+    </section>
+
+    <section id="referidos" class="section">
+        <h2>Recompensas por Referidos</h2>
+        <p>Invita a tus amigos y gana tokens LMB. Por cada referido que compre al menos 10 USDT, recibirás recompensas en LMB.</p>
+        <p>¡Promociona LORD M y obtén beneficios!</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 LORD M (LMB) - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
