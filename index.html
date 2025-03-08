@@ -68,11 +68,50 @@
             font-size: 18px;
         }
 
+        /* Youtuber Section */
+        #youtuberSection {
+            margin-top: 40px;
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Timer Section */
+        #countdownTimer {
+            margin-top: 30px;
+            font-size: 20px;
+            color: #FFD700;
+        }
+
+        /* Social Media Share Section */
+        #socialShare {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        /* Language Selection */
+        #languageSelector {
+            margin-top: 10px;
+            font-size: 16px;
+            background-color: #333;
+            border: 1px solid #FFD700;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <h1>Preventa de LORD M (LMB)</h1>
 
+    <!-- Language Selector -->
+    <div>
+        <label for="languageSelector">Seleccionar idioma:</label>
+        <select id="languageSelector">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+
+    <!-- Compra de Tokens -->
     <div>
         <label for="amountInput">Cantidad de USDT:</label>
         <input type="number" id="amountInput" placeholder="Cantidad en USDT" />
@@ -103,8 +142,30 @@
 
     <div id="statusMessage"></div>
 
+    <!-- Youtuber Section -->
+    <div id="youtuberSection">
+        <h3>¡Promociona LORD M y gana tokens!</h3>
+        <p>Si eres Youtuber y deseas participar en nuestro programa de referidos, regístrate a continuación.</p>
+        <form id="youtuberForm">
+            <input type="text" id="youtuberChannel" placeholder="URL de tu canal de YouTube" />
+            <button type="submit">Registrar Canal</button>
+        </form>
+        <div id="youtuberStatus"></div>
+    </div>
+
+    <!-- Temporizador de preventa -->
+    <div id="countdownTimer">Tiempo restante para la etapa actual: <span id="timer"></span></div>
+
+    <!-- Social Media Share Section -->
+    <div id="socialShare">
+        <p>¡Comparte la preventa de LORD M en tus redes sociales!</p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://example.com" target="_blank">Compartir en Facebook</a> |
+        <a href="https://twitter.com/intent/tweet?url=https://example.com" target="_blank">Compartir en Twitter</a> |
+        <a href="https://wa.me/?text=https://example.com" target="_blank">Compartir en WhatsApp</a>
+    </div>
+
     <script>
-        // ABI del contrato (proporcionado por el usuario)
+        // ABI y dirección del contrato
         const abi = [
             {
                 "constant": true,
@@ -158,8 +219,8 @@
             }
         ];
 
-        // Dirección del contrato del token (proporcionado por el usuario)
-        const contractAddress = '0x3Bd2D68541F359BdFDd5F172A6d4BA60096e8814'; // Dirección de la preventa
+        // Dirección del contrato de la preventa
+        const contractAddress = '0x3Bd2D68541F359BdFDd5F172A6d4BA60096e8814';
 
         let web3;
         let currentAccount;
@@ -192,19 +253,15 @@
 
                 // Si el pago es en USDT, interactuar con el contrato de USDT
                 if (selectedNetwork === 'binance') {
-                    // Si estamos en BSC y el pago es con USDT, configuramos el contrato de USDT en BSC.
-                    const usdtContractAddress = '0x55d398326f99059fF775485246999027B3197955'; // Dirección de USDT en BSC
+                    const usdtContractAddress = '0x55d398326f99059fF775485246999027B3197955'; // USDT en BSC
                     const usdtContract = new web3.eth.Contract(erc20ABI, usdtContractAddress);
-                    
-                    // Asegurarse de que el usuario apruebe la cantidad de USDT antes de enviar
+
                     await usdtContract.methods.approve(contractAddress, web3.utils.toWei(amount, 'mwei')).send({ from: currentAccount });
 
-                    // Llamada al contrato para comprar tokens con USDT
                     await contract.methods.buyTokensWithUSDT(amount, referrer || '0x0000000000000000000000000000000000000000').send({
                         from: currentAccount
                     });
                 } else {
-                    // Si no es BSC, se asume pago en Ether (ETH)
                     await contract.methods.buyTokens(amount, referrer || '0x0000000000000000000000000000000000000000').send({
                         from: currentAccount,
                         value: web3.utils.toWei(amount, 'ether')
@@ -213,27 +270,33 @@
 
                 document.getElementById('statusMessage').innerText = 'Compra exitosa!';
             } catch (error) {
+                console.error(error);
                 document.getElementById('statusMessage').innerText = 'Error en la compra.';
-                console.error('Error en la compra:', error);
             }
         }
 
-        // Llamada a la función de compra cuando el usuario hace clic
-        document.getElementById('buyButton').onclick = async function () {
-            const amount = document.getElementById('amountInput').value;
-            const referrer = document.getElementById('referrerInput').value;
+        // Función para iniciar la cuenta regresiva
+        function startCountdown() {
+            const countdownDate = new Date().getTime() + (30 * 60 * 1000); // 30 minutos
 
-            if (amount >= 10) {
-                // Conectar a la red seleccionada
-                await connectToNetwork();
+            const interval = setInterval(function () {
+                const now = new Date().getTime();
+                const distance = countdownDate - now;
 
-                // Comprar tokens
-                buyTokens(amount, referrer);
-            } else {
-                alert('La cantidad mínima es 10 USDT.');
-            }
-        };
+                if (distance < 0) {
+                    clearInterval(interval);
+                    document.getElementById('timer').innerText = "La etapa ha terminado";
+                } else {
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    document.getElementById('timer').innerText = `${minutes}m ${seconds}s`;
+                }
+            }, 1000);
+        }
+
+        // Inicializar funciones
+        startCountdown();
+        connectToNetwork();
     </script>
-
 </body>
 </html>
