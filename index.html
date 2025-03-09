@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preventa del Token LORD M (LMB)</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.5/dist/web3.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .preventa-table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+
+        .preventa-table th, .preventa-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .preventa-table th {
+            background-color: #222;
+        }
+
+        .btn {
+            background-color: #f39c12;
+            padding: 15px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #e67e22;
+        }
+
+        .countdown {
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .statistics {
+            margin-top: 30px;
+            font-size: 18px;
+        }
+
+        .referido-section, .youtubers-section {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>¡Bienvenidos a la Preventa del Token LORD M (LMB)!</h1>
+        <p>¡Apoya el crecimiento del proyecto y asegura tus tokens antes de que lleguen al mercado!</p>
+
+        <div class="preventa-table">
+            <h2>Preventa: Tabla de Precios por Etapa</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Etapa</th>
+                        <th>Precio por Token (USDT)</th>
+                        <th>Cantidad de Tokens por Etapa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Etapa 1</td>
+                        <td>0.18</td>
+                        <td>7,500,000</td>
+                    </tr>
+                    <tr>
+                        <td>Etapa 2</td>
+                        <td>0.30</td>
+                        <td>7,500,000</td>
+                    </tr>
+                    <tr>
+                        <td>Etapa 3</td>
+                        <td>0.40</td>
+                        <td>10,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Etapa 4</td>
+                        <td>0.50</td>
+                        <td>15,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Etapa 5</td>
+                        <td>0.65</td>
+                        <td>20,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Etapa 6</td>
+                        <td>0.85</td>
+                        <td>25,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Etapa 7</td>
+                        <td>1.00</td>
+                        <td>30,000,000</td>
+                    </tr>
+                    <tr>
+                        <td>Etapa 8</td>
+                        <td>1.20</td>
+                        <td>35,000,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="statistics">
+            <p>Progreso de la Preventa:</p>
+            <p>Total de Tokens Vendidos: <span id="tokens-sold">0</span></p>
+            <p>Total Recaudado (USDT): <span id="total-raised">0</span></p>
+        </div>
+
+        <div class="countdown">
+            <p id="countdown-timer">Tiempo restante: Calculando...</p>
+        </div>
+
+        <div class="referido-section">
+            <h2>Recompensas por Referidos</h2>
+            <p>Invita a tus amigos y gana tokens LMB por cada referido que compre al menos 10 USDT.</p>
+        </div>
+
+        <div class="youtubers-section">
+            <h2>Para YouTubers</h2>
+            <p>Si eres YouTuber, puedes promocionar nuestro token y recibir recompensas por tu apoyo.</p>
+        </div>
+
+        <button class="btn" onclick="buyTokens()">Comprar Tokens</button>
+    </div>
+
+    <script>
+        // ABI del contrato de la preventa
+        const contractABI = [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "getTokensSold",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "buyTokens",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "function"
+            }
+        ];
+
+        // Dirección del contrato de la preventa
+        const contractAddress = "0x3Bd2D68541F359BdFDd5F172A6d4BA60096e8814"; // Dirección del contrato
+
+        // Dirección de la wallet de preventa
+        const presaleWallet = "0x3Bd2D68541F359BdFDd5F172A6d4BA60096e8814";
+
+        // Dirección de la wallet de marketing
+        const marketingWallet = "0x74CdB3235b6a5397c5952E7D5aAc9A0F5E43Eb69";
+
+        // Dirección del CEO y dueño
+        const ceoWallet = "0x7d7cCd8F2528666f06A30c0ea033374C2871884F";
+
+        // Variables de seguimiento
+        let totalSold = 0;
+        let totalRaised = 0;
+        const stageData = [
+            { stage: 1, price: 0.18, tokens: 7500000 },
+            { stage: 2, price: 0.30, tokens: 7500000 },
+            { stage: 3, price: 0.40, tokens: 10000000 },
+            { stage: 4, price: 0.50, tokens: 15000000 },
+            { stage: 5, price: 0.65, tokens: 20000000 },
+            { stage: 6, price: 0.85, tokens: 25000000 },
+            { stage: 7, price: 1.00, tokens: 30000000 },
+            { stage: 8, price: 1.20, tokens: 35000000 }
+        ];
+
+        function updateStats() {
+            document.getElementById('tokens-sold').innerText = totalSold;
+            document.getElementById('total-raised').innerText = totalRaised.toFixed(2);
+        }
+
+        // Función para comprar tokens
+        async function buyTokens() {
+            if (window.ethereum) {
+                const web3 = new Web3(window.ethereum);
+                await window.ethereum.enable();
+
+                const contract = new web3.eth.Contract(contractABI, contractAddress);
+                const userAddress = (await web3.eth.getAccounts())[0];
+                const amountToBuy = 100; // USDT (ejemplo)
+
+                // Aquí podrías realizar la llamada a la función del contrato para la compra
+                await contract.methods.buyTokens(amountToBuy).send({ from: userAddress, to: presaleWallet, value: web3.utils.toWei(amountToBuy.toString(), 'ether') });
+
+                // Actualizar las estadísticas
+                totalSold += amountToBuy;
+                totalRaised += amountToBuy;
+                updateStats();
+            } else {
+                alert("Por favor, instala MetaMask.");
+            }
+        }
+
+        // Temporizador de cuenta regresiva (ejemplo)
+        function startCountdown() {
+            const endTime = new Date().getTime() + 60 * 60 * 1000; // 30 minutos como ejemplo
+            setInterval(function() {
+                const timeLeft = endTime - new Date().getTime();
+                if (timeLeft <= 0) {
+                    document.getElementById('countdown-timer').innerText = "¡La preventa ha terminado!";
+                } else {
+                    const minutes = Math.floor(timeLeft / 60000);
+                    const seconds = Math.floor((timeLeft % 60000) / 1000);
+                    document.getElementById('countdown-timer').innerText = `Tiempo restante: ${minutes}m ${seconds}s`;
+                }
+            }, 1000);
+        }
+
+        startCountdown();
+    </script>
+
+</body>
+</html>
