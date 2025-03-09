@@ -82,7 +82,7 @@
   {
     "id": 17,
     "name": "Listing Price",
-    "value": "0.1"
+    "value": "0.18"
   },
   {
     "id": 18,
@@ -102,11 +102,11 @@
   {
     "id": 21,
     "name": "Minimum Buy",
-    "value": "0,0001"
+    "value": "0,018"
   },
   {
     "id": 22,
     "name": "Maximum Buy",
-    "value": "200"
+    "value": "0,4"
   }
 ]
