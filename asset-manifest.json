@@ -10,7 +10,7 @@
     "787.fb343ab3.chunk.js.map": "https://lordm-lmb.github.io//js/787.fb343ab3.chunk.js.map"
   },
   "entrypoints": [
-    "https://lordm-lmb.github.io/css/main.7fbb0223.css",
-    "https://lordm-lmb.github.io/js/main.37a322aa.js"
+    "static/css/main.7fbb0223.css",
+    "static//lordm-lmb.github.io/js/main.37a322aa.js"
   ]
 }
