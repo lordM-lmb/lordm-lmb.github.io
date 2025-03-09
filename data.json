@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Presale Contract",
-    "value": "0x3Bd2D68541F359BdFDd5F172A6d4BA60096e8814"
+    "value": "0xd56BFD2bDF75629f04e11b28f53180897adA7580"
   },
   {
     "id": 2,
@@ -27,7 +27,7 @@
   {
     "id": 6,
     "name": "Token Contract",
-    "value": "0x53a3bE470d8B8255c9Ed5015C5b953F574b2Ce86"
+    "value": "0xA1412331439BD6Ac4Fd8228556E865C597ED9B54"
   },
   {
     "id": 7,
@@ -66,7 +66,7 @@
   },
   {
     "id": 14,
-    "name": "Owner Wallet",
+    "name": "presalev2 Wallet",
     "value": "0x7d7cCd8F2528666f06A30c0ea033374C2871884F"
   },
   {
@@ -82,27 +82,27 @@
   {
     "id": 17,
     "name": "Listing Price",
-    "value": "0.18"
+    "value": "0.1"
   },
   {
     "id": 18,
-      "name": "Chain Name",
-      "value": "Base Network"
-    },
-    {
-      "id": 19,
-      "name": "Chain ID",
-      "value": "8453"
-    },
-    {
-      "id": 20,
-      "name": "Native Coin",
-      "value": "ETH"
+    "name": "Chain Name",
+    "value": "Binance Smart Chain"
+  },
+  {
+    "id": 19,
+    "name": "Chain ID",
+    "value": "56"
+  },
+  {
+    "id": 20,
+    "name": "Native Coin",
+    "value": "BNB"
   },
   {
     "id": 21,
     "name": "Minimum Buy",
-    "value": "10"
+    "value": "0,0001"
   },
   {
     "id": 22,
