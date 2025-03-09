@@ -616,14 +616,14 @@
                                             e.next = 17;
                                             break
                                         }
-                                        Y.b.error("Error! Minimum amount is 0.01 BNB"), e.next = 38;
+                                        Y.b.error("Error! Minimum amount is 0.001 BNB"), e.next = 38;
                                         break;
                                     case 17:
                                         if (!(0 !== +b && +b > 200)) {
                                             e.next = 21;
                                             break
                                         }
-                                        Y.b.error("Error! Maximum amount is 200 BNB"), e.next = 38;
+                                        Y.b.error("Error! Maximum amount is 1 BNB"), e.next = 38;
                                         break;
                                     case 21:
                                         return e.prev = 21, k(!0), console.log(Object($.e)(b.toString()).toString(), "parseUnits(amount.toString())"), e.next = 26, i.buyTokens(n, {
