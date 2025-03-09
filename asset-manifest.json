@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "https://lordm-lmb.github.io/css/main.7fbb0223.css",
+    "main.js": "https://lordm-lmb.github.io/js/main.37a322aa.js",
+    "static/js/787.fb343ab3.chunk.js": "https://lordm-lmb.github.io/js/787.fb343ab3.chunk.js",
+    "static/media/bg-background.jpg": "https://lordm-lmb.github.io//media/bg-background.fef33a9fa5c72e80fa10.jpg",
+    "index.html": "https://lordm-lmb.github.io/index.html",
+    "main.7fbb0223.css.map": "https://lordm-lmb.github.io//css/main.7fbb0223.css.map",
+    "main.37a322aa.js.map": "https://lordm-lmb.github.io//js/main.37a322aa.js.map",
+    "787.fb343ab3.chunk.js.map": "https://lordm-lmb.github.io//js/787.fb343ab3.chunk.js.map"
+  },
+  "entrypoints": [
+    "https://lordm-lmb.github.io/css/main.7fbb0223.css",
+    "https://lordm-lmb.github.io/js/main.37a322aa.js"
+  ]
+}
