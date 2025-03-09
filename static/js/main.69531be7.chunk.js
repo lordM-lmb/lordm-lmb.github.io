@@ -538,7 +538,7 @@
                     var e, t = Object(a.useContext)(w),
                         n = t.account,
                         i = function(e) {
-                            return A("0x34731aaEf796dBA871c7a053569049F7DfA49C12", z, e)
+                            return A("0xcB71C4b5ECAc9A6128424db0b7991bA257Bf0486", z, e)
                         }(t.signer),
                         r = Object(d.a)("(max-width:700px)"),
                         o = Object(a.useState)(""),
@@ -566,7 +566,7 @@
                                     for (;;) switch (e.prev = e.next) {
                                         case 0:
                                             try {
-                                                O(t = 1000000 * +b), console.log(t, "tokenReceive")
+                                                O(t = 3000 * +b), console.log(t, "tokenReceive")
                                             } catch (n) {}
                                         case 1:
                                         case "end":
@@ -680,7 +680,7 @@
                                             color: "",
                                             fontSize: "30px"
                                         },
-                                        children: "Techaddict Coin Presale"
+                                        children: "WELCOME! LORD M PRESALE / BUY LORD & LADY"
                                     }), Object(h.jsx)("h3", {
                                         
                                     }), ]
@@ -923,7 +923,7 @@
                                                     fontSize: "16px",
                                                     color: "#ffffff",
                                                     fontFamily: "Chakra Petch",
-                                                    children: "EIYE Coin Token"
+                                                    children: "LMB TOKEN"
                                                 })]
                                             }), Object(h.jsxs)(u.a, {
                                                 display: "flex",
@@ -989,7 +989,7 @@
                                                     fontSize: "16px",
                                                     color: "#ffffff",
                                                     fontFamily: "Chakra Petch",
-                                                    children: "1000000"
+                                                    children: "3000"
                                                 })]
                                             }), Object(h.jsxs)(u.a, {
                                                 display: "flex",
@@ -1011,7 +1011,7 @@
                                                     fontSize: "16px",
                                                     color: "#ffffff",
                                                     fontFamily: "Chakra Petch",
-                                                    children: ["0.01 BNB", " "]
+                                                    children: ["0.025 BNB", " "]
                                                 })]
                                             }), Object(h.jsxs)(u.a, {
                                                 display: "flex",
