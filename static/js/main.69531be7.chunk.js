@@ -714,7 +714,7 @@
                                                 color: "#ffffff",
                                                 fontFamily: "Secular One",
                                                 textAlign: "center",
-                                                children: "Buy EIYE Coin"
+                                                children: "Buy LMB Coin"
                                             }), Object(h.jsxs)(u.a, {
                                                 mt: 2,
                                                 mb: 2,
@@ -902,7 +902,7 @@
                                                 color: "#ffffff",
                                                 fontFamily: "Secular One",
                                                 textAlign: "center",
-                                                children: "Token Info"
+                                                children: "LMB 8E.DE PREVENTA"
                                             }), Object(h.jsxs)(u.a, {
                                                 mt: 2,
                                                 display: "flex",
@@ -945,7 +945,7 @@
                                                     fontSize: "16px",
                                                     color: "#ffffff",
                                                     fontFamily: "Chakra Petch",
-                                                    children: "EIYC"
+                                                    children: "LMB"
                                                 })]
                                             }), Object(h.jsxs)(u.a, {
                                                 display: "flex",
@@ -1150,7 +1150,7 @@
                                                         href: ""
                                                     }), Object(h.jsx)("em", {
                                                         children: Object(h.jsx)("b", {
-                                                            children: "EIYE Coin Website"
+                                                            children: "LMB Coin Website"
                                                         })
                                                     }), ". a prompt shows, choose network and click ", Object(h.jsx)("em", {
                                                         children: Object(h.jsx)("b", {
@@ -1162,7 +1162,7 @@
                                                         children: "confirm."
                                                     })]
                                                 }), Object(h.jsx)("li", {
-                                                    children: "Once connected, enter the amount of EIYE Coin you want to buy with BNB "
+                                                    children: "Once connected, enter the amount of LMB Coin you want to buy with BNB "
                                                 })]
                                             })]
                                         })]
