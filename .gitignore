@@ -31,14 +31,9 @@ yarn-error.log*
 # vercel
 .vercel
 
-node_modules
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment variables
 .env
-coverage
-coverage.json
-typechain
-typechain-types
-
-# Hardhat files
-cache
-artifacts
-
