@@ -5,6 +5,12 @@ try {
   // ignore error
 }
 
+// next.config.js
+module.exports = {
+  assetPrefix: './',
+  trailingSlash: true,
+};
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
